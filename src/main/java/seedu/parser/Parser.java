@@ -1,6 +1,9 @@
 package seedu.parser;
 
+import data.Resource;
+
 import seedu.commands.Command;
+import seedu.commands.AddCommand;
 import seedu.commands.DeleteCommand;
 import seedu.commands.FindCommand;
 import seedu.commands.HelpCommand;
@@ -12,18 +15,21 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Parser {
-    public List<String> taskList = new ArrayList<>();
+    public List<Resource> taskList = new ArrayList<>();
     public HashMap<String, Command> commandProcessor = new HashMap<>() {
         {
             put("list", new ListCommand());
             put("delete", new DeleteCommand());
             put("find", new FindCommand());
             put("help", new HelpCommand());
+<<<<<<< HEAD
             put("bye", new ExitCommand());
+=======
+            put("add", new AddCommand());
+>>>>>>> c5bb57406ed0171f9b20242b11d01e4955ec7839
         }
     };
     public void process(String response) {
-        taskList.add("testing 123");
         String command = response.split(" ")[0];
         if (commandProcessor.containsKey(command)) {
             String statement = removeFirstWord(response);
