@@ -22,11 +22,8 @@ public class Parser {
             put("delete", new DeleteCommand());
             put("find", new FindCommand());
             put("help", new HelpCommand());
-<<<<<<< HEAD
             put("bye", new ExitCommand());
-=======
             put("add", new AddCommand());
->>>>>>> c5bb57406ed0171f9b20242b11d01e4955ec7839
         }
     };
     public void process(String response) {
