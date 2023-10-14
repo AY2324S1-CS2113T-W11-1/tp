@@ -28,7 +28,7 @@ public class StorageFileTest {
     @TempDir
     public static Path testFolder;
 
-    private static final String TEST_DATA_FOLDER = "test/data/StorageFileTest";
+    private static final String TEST_DATA_FOLDER = "src/test/data/StorageFileTest";
     private static final String NON_EXISTANT_FILE_NAME = "ThisFileDoesNotExist.txt";
 
     @Test
