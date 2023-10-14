@@ -24,10 +24,10 @@ public class Duke {
 
         while (true) {
             String response = ui.readCommand();
+            parser.process(response);
             if (response.equalsIgnoreCase("bye")){
                 break;
             }
-            parser.process(response);
         }
         ui.showExitMessage();
     }
