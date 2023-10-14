@@ -1,10 +1,10 @@
-package seedu.duke;
+package seedu.addressbook;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-class DukeTest {
+class AddressBookTest {
     @Test
     public void sampleTest() {
         assertTrue(true);
