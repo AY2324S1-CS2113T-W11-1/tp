@@ -12,16 +12,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class TestUtil {
-
-
-    public String getOutputMessage(Command c, String m) throws SysLibException {
-        ResourceList resourcelist = new ResourceList();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        c.execute(m, resourcelist);
-        return outputStream.toString();
-    }
-
     public String getOutputMessage(Command c, String m, ArrayList<Resource> resourceList) throws SysLibException {
         ResourceList resourcelist = new ResourceList(resourceList);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
