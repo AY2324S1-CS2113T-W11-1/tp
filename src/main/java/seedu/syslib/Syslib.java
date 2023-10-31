@@ -1,22 +1,25 @@
-package seedu.duke;
+package seedu.syslib;
 
+import seedu.data.ResourceList;
 import seedu.parser.Parser;
 import seedu.ui.UI;
 
-public class Duke {
+public class Syslib {
     /**
      * Main entry-point for the java.duke.Duke application.
      */
     private static UI ui;
     private static Parser parser;
+    private static ResourceList resourcelist;
 
-    public Duke(){
+    public Syslib(){
+        resourcelist = new ResourceList();
         ui = new UI();
         parser = new Parser();
     }
 
     public static void main(String[] args) {
-        new Duke().run();
+        new Syslib().run();
     }
 
     public void run(){
@@ -24,7 +27,7 @@ public class Duke {
 
         while (true) {
             String response = ui.readCommand();
-            parser.process(response);
+            parser.processInput(response, resourcelist);
             if (response.equalsIgnoreCase("exit")){
                 break;
             }

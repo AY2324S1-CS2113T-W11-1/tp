@@ -1,14 +1,10 @@
 package seedu.commands;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import seedu.data.Resource;
+import seedu.data.ResourceList;
 import seedu.data.SysLibException;
-import seedu.parser.Parser;
 import seedu.util.TestUtil;
 
 
@@ -24,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ListCommandTest {
 
-    private static List<Resource> testResourceList = new ArrayList<>();
-    private Parser parser = new Parser();
-    private List<Resource> emptyResourceList = new ArrayList<>();
-    private TestUtil testUtil = new TestUtil();
+    private static ResourceList testResourceList = new ResourceList();
+    private static ResourceList resourcelist = new ResourceList();
+    private final ResourceList emptyResourceList = new ResourceList();
+    private final TestUtil testUtil = new TestUtil();
 
-    private Command listCommand = new ListCommand();
+    private final Command listCommand = new ListCommand();
 
 
     @BeforeAll
@@ -40,7 +36,7 @@ public class ListCommandTest {
 
     @Test
     public void testEmptyListMessage() throws SysLibException {
-        String outputMessage = testUtil.getOutputMessage(listCommand, "", emptyResourceList);
+        String outputMessage = testUtil.getOutputMessage(listCommand, "", emptyResourceList.getResourceList());
         String expectedMessage = GENERIC_MESSAGE;
         expectedMessage +=  ZERO_RESOURCES_MESSAGE + LINESEPARATOR;
         assertEquals(expectedMessage, outputMessage);
@@ -49,20 +45,21 @@ public class ListCommandTest {
 
     @Test
     public void testListByTagBehavior() {
-        parser.resourceList = testResourceList;
-        assertThrows(IllegalArgumentException.class, ()->listCommand.execute("/tag", parser));
+        resourcelist = testResourceList;
+        assertThrows(IllegalArgumentException.class, ()->listCommand.execute("/tag", resourcelist));
 
     }
     @Test
     public void testListByGenreBehavior()  {
-        parser.resourceList = testResourceList;
-        assertThrows(IllegalArgumentException.class, ()->listCommand.execute("/g", parser));
+        resourcelist = testResourceList;
+        assertThrows(IllegalArgumentException.class, ()->listCommand.execute("/g", resourcelist));
 
     }
 
     @Test
     public void testNoFilteredListDisplay() throws SysLibException {
-        String outputMessage = testUtil.getOutputMessage(listCommand, "/g Thriller", testResourceList);
+        String outputMessage = testUtil.getOutputMessage(listCommand, "/g Thriller",
+                testResourceList.getResourceList());
         String expectedMessage = FILTER_MESSAGE;
         expectedMessage += ZERO_RESOURCES_MESSAGE + LINESEPARATOR;
         assertEquals(expectedMessage, outputMessage);

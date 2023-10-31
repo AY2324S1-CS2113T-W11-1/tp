@@ -2,6 +2,7 @@ package seedu.parser;
 
 import org.junit.jupiter.api.Test;
 import seedu.data.Book;
+import seedu.data.ResourceList;
 import seedu.data.Status;
 import seedu.data.SysLibException;
 
@@ -17,11 +18,12 @@ class ParserTest {
     @Test
     public void testProcessExitCommand() {
         Parser parser = new Parser();
+        ResourceList resourcelist = new ResourceList();
         String validResponse = "exit";
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
-        parser.process(validResponse);
+        parser.processInput( validResponse, resourcelist);
 
         System.setOut(System.out);
         String output = outputStream.toString();
@@ -35,11 +37,12 @@ class ParserTest {
     @Test
     public void testProcessHelpCommand() {
         Parser parser = new Parser();
+        ResourceList resourcelist = new ResourceList();
         String validResponse = "help";
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
-        parser.process(validResponse);
+        parser.processInput( validResponse, resourcelist);
 
         System.setOut(System.out);
         String output = outputStream.toString();
@@ -65,12 +68,13 @@ class ParserTest {
     @Test
     public void testProcessUnknownCommand() {
         Parser parser = new Parser();
+        ResourceList resourcelist = new ResourceList();
         String validResponse = "bye";
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
 
         System.setOut(System.out);
         String output = outputStream.toString();
@@ -87,13 +91,14 @@ class ParserTest {
     public void testProcessCommands() {
         //Test add
         Parser parser = new Parser();
+        ResourceList resourcelist = new ResourceList();
         String validResponse = "add /id 1 /t Surrounded by Idiots /a Thomas Erikson " +
                 "/tag B /i 9781250255174 /g Self-help";
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
 
         System.setOut(System.out);
         String output = outputStream.toString();
@@ -103,13 +108,13 @@ class ParserTest {
         //Add second book
         validResponse = "add /id 2 /t The Subtle Art of Not Giving a F*ck /a Mark Manson " +
                 "/tag B /i 9780062457714 /g Self-help";
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
         expectedOutput += "This book is added: The Subtle Art of Not Giving a F*ck" + System.lineSeparator() +
                 "____________________________________________________________" + System.lineSeparator()
                 + System.lineSeparator();;
         //Test list
         validResponse = "list";
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
         expectedOutput += "Listing all resources in the Library:" + System.lineSeparator() + System.lineSeparator() +
                 "1. [B]  ID: 1 Title: Surrounded by Idiots ISBN: 9781250255174 " +
                 "Author: Thomas Erikson Genre: Self-help Status: AVAILABLE" + System.lineSeparator()+
@@ -122,7 +127,7 @@ class ParserTest {
         assertEquals(expectedOutput, output);
         //Test find
         validResponse = "find /t The Subtle Art of Not Giving a F*ck";
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
         expectedOutput += "Here are resources that matched the given filters:" + System.lineSeparator() +
                 "[B]  ID: 2 Title: The Subtle Art of Not Giving a F*ck ISBN: 9780062457714 " +
                 "Author: Mark Manson Genre: Self-help Status: AVAILABLE" + System.lineSeparator() +
@@ -131,14 +136,14 @@ class ParserTest {
         assertEquals(expectedOutput, output);
         //Negative find test
         validResponse = "find /t No Such Book";
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
         expectedOutput += "There are no resources found matching the given filters." + System.lineSeparator() +
                 "____________________________________________________________" + System.lineSeparator();;
         output = outputStream.toString();
         assertEquals(expectedOutput, output);
         //Test edit
         validResponse = "edit /i 9781250255174 /a Thomas";
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
         output = outputStream.toString();
         expectedOutput += "Successfully updated! Your updated resource:" + System.lineSeparator()
                 + System.lineSeparator() + "[B]  ID: 1 Title: Surrounded by Idiots ISBN: 9781250255174 " +
@@ -147,7 +152,7 @@ class ParserTest {
         assertEquals(expectedOutput, output);
 
         validResponse = "edit /i 9781250255174 /s lost";
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
         output = outputStream.toString();
         expectedOutput += "Successfully updated! Your updated resource:" + System.lineSeparator()
                 + System.lineSeparator() + "[B]  ID: 1 Title: Surrounded by Idiots ISBN: 9781250255174 " +
@@ -156,7 +161,7 @@ class ParserTest {
         assertEquals(expectedOutput, output);
         //Test delete
         validResponse = "delete /id 1";
-        parser.process(validResponse);
+        parser.processInput(validResponse, resourcelist);
         output = outputStream.toString();
         expectedOutput += "Looking for ID: 1..." + System.lineSeparator() +
                 "This resource is removed: " + System.lineSeparator() +

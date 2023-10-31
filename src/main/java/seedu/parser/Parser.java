@@ -1,8 +1,8 @@
 package seedu.parser;
 
 import seedu.data.Book;
-import seedu.data.Resource;
 
+import seedu.data.ResourceList;
 import seedu.data.Status;
 import seedu.data.SysLibException;
 import seedu.commands.Command;
@@ -15,17 +15,11 @@ import seedu.commands.ExitCommand;
 import seedu.commands.EditCommand;
 import static seedu.ui.UI.SEPARATOR_LINEDIVIDER;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-
-    public List<Resource> resourceList = new ArrayList<>();
-
-
     public HashMap<String, Command> commandProcessor = new HashMap<>() {
         {
             put("list", new ListCommand());
@@ -38,12 +32,12 @@ public class Parser {
         }
     };
 
-    public void process(String response) {
+    public void processInput(String response, ResourceList resourcelist) {
         String command = response.split(" ")[0];
         if (commandProcessor.containsKey(command)) {
             String statement = removeFirstWord(response);
             try {
-                commandProcessor.get(command).execute(statement, this);
+                commandProcessor.get(command).execute(statement, resourcelist);
             } catch (IllegalArgumentException | IllegalStateException | SysLibException e) {
                 System.out.println(e.getMessage());
             }
@@ -59,10 +53,6 @@ public class Parser {
             return "";
         }
         return response.substring(index + 1);
-    }
-
-    public List<Resource> getResourceList() {
-        return resourceList;
     }
 
     public static String[] parseAddCommand(String statement) throws SysLibException {
@@ -145,8 +135,6 @@ public class Parser {
         }
     }
 
-
-
     public static Book createBook(String[] args) throws IllegalStateException, NumberFormatException {
         int id;
         try {
@@ -171,11 +159,6 @@ public class Parser {
         return new Book(title, isbn, author, genres, id, status);
     }
 
-    public Matcher parseFindCommand(String command) throws SysLibException{
-        // Define a regular expression pattern to match optional flags and their values
-        Pattern pattern = Pattern.compile("/(t|a|i|id)\\s+([^/]+)");
-        return pattern.matcher(command);
-    }
     public static Status getStatusFromString(String statusString) {
         if (statusString != null) {
             statusString = statusString.toLowerCase().trim();

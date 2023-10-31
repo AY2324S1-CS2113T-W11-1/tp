@@ -1,7 +1,7 @@
 package seedu.commands;
 
+import seedu.data.ResourceList;
 import seedu.data.SysLibException;
-import seedu.parser.Parser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public abstract class Command {
     protected String[] args;
     protected boolean[] required;
-    public abstract void execute(String statement, Parser parser) throws
+    public abstract void execute(String statement, ResourceList resourceList) throws
             IllegalArgumentException, IllegalStateException, SysLibException;
 
     /**

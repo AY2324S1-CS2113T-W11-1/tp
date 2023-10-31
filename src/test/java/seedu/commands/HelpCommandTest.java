@@ -6,18 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import seedu.parser.Parser;
+import seedu.data.ResourceList;
 
 class HelpCommandTest {
 
     @Test
     void execute() {
-        Parser parser = new Parser();
+        ResourceList resourcelist = new ResourceList();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         HelpCommand helpCommand = new HelpCommand();
-        helpCommand.execute("", parser);
+        helpCommand.execute("", resourcelist);
 
         String output = outputStream.toString();
         String expectedOutput = "Commands available:" + System.lineSeparator() +

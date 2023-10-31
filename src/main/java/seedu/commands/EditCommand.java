@@ -1,14 +1,10 @@
 package seedu.commands;
 
-
 import seedu.data.Book;
 import seedu.data.Resource;
-import seedu.data.Status;
+import seedu.data.ResourceList;
 import seedu.data.SysLibException;
-import seedu.parser.Parser;
-
-
-import java.util.List;
+import seedu.data.Status;
 
 import static seedu.common.Messages.formatLastLineDivider;
 import static seedu.common.Messages.formatLineSeparator;
@@ -31,19 +27,19 @@ public class EditCommand extends Command{
 
 
     @Override
-    public void execute(String statement, Parser parser) throws SysLibException, IllegalArgumentException {
+    public void execute(String statement, ResourceList resourcelist) throws SysLibException, IllegalArgumentException {
         feedbackToUser = "";
         String[] givenParameters = parseArgument(statement);
         validateStatement(statement, givenParameters);
 
         if (hasOneArg(givenParameters)){
             String givenISBN = givenParameters[0];
-            Resource foundResource = findResourceByISBN(givenISBN, parser.resourceList);
+            Resource foundResource = findResourceByISBN(givenISBN, resourcelist);
 
             if(foundResource != null){
                 Resource updatedResource = editResource(foundResource, givenParameters);
 
-                parser.resourceList.set(resourceIndex, updatedResource);
+                resourcelist.getResourceList().set(resourceIndex, updatedResource);
                 feedbackToUser += EDIT_SUCCESS + formatLastLineDivider(updatedResource.toString());
 
             } else{
@@ -68,13 +64,13 @@ public class EditCommand extends Command{
 
     }
 
-    public Resource findResourceByISBN(String givenISBN, List<Resource> resourceList){
+    public Resource findResourceByISBN(String givenISBN, ResourceList resourcelist){
 
         Resource foundResource = null;
 
-        for (int i=0;i < resourceList.size(); i++){
+        for (int i=0;i < resourcelist.getResourceList().size(); i++){
 
-            Resource tempResource = resourceList.get(i);
+            Resource tempResource = resourcelist.getResourceList().get(i);
 
             String resourceISBN = tempResource.getISBN();
             if (resourceISBN.equals(givenISBN)){

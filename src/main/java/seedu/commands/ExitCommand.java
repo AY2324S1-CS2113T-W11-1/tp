@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.logging.SimpleFormatter;
 
-import seedu.parser.Parser;
+import seedu.data.ResourceList;
 import seedu.ui.UI;
 
 public class ExitCommand extends Command{
@@ -32,9 +32,9 @@ public class ExitCommand extends Command{
     }
 
     @Override
-    public void execute(String statement, Parser parser) throws IllegalArgumentException {
+    public void execute(String statement, ResourceList resourcelist) throws IllegalArgumentException {
         assert statement != null : "Statement to execute cannot be null";
-        assert parser != null : "Parser must not be null";
+        assert resourcelist != null : "Parser must not be null";
         LOGGER.log(Level.INFO, "Executing ExitCommand...");
         UI ui = new UI();
         ui.showExitMessage();

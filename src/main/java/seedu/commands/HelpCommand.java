@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import seedu.parser.Parser;
+import seedu.data.ResourceList;
 import seedu.ui.UI;
 
 public class HelpCommand extends Command {
@@ -34,9 +34,9 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void execute(String statement, Parser parser) throws IllegalArgumentException {
+    public void execute(String statement, ResourceList resourceList) throws IllegalArgumentException {
         assert statement != null : "Statement to execute cannot be null";
-        assert parser != null : "Parser must not be null";
+        assert resourceList != null : "Parser must not be null";
         UI ui = new UI();
         logger.log(Level.INFO, "Executing HelpCommand");
         ui.showHelpMessage();

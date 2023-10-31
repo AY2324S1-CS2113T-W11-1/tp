@@ -2,8 +2,8 @@ package seedu.commands;
 
 
 import seedu.data.Resource;
+import seedu.data.ResourceList;
 import seedu.data.SysLibException;
-import seedu.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +30,11 @@ public class ListCommand extends Command {
 
 
     @Override
-    public void execute(String statement, Parser parser) throws SysLibException, IllegalArgumentException {
+    public void execute(String statement, ResourceList resourcelist) throws SysLibException, IllegalArgumentException {
         feedbackToUser = "";
         String[] values = parseArgument(statement);
         validateStatement(statement, values);
-        filterResources(values, parser.resourceList);
+        filterResources(values, resourcelist.getResourceList());
 
         System.out.println(feedbackToUser);
     }

@@ -1,13 +1,10 @@
 package seedu.commands;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import seedu.data.Resource;
+import seedu.data.ResourceList;
 import seedu.data.SysLibException;
-import seedu.parser.Parser;
 import seedu.util.TestUtil;
 
 
@@ -21,21 +18,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EditCommandTest {
-    private static List<Resource> testResourceList = new ArrayList<>();
-    private Parser parser = new Parser();
-    private List<Resource> emptyResourceList = new ArrayList<>();
-    private TestUtil testUtil = new TestUtil();
-    private Command editCommand = new EditCommand();
+    private static ResourceList testResourceList = new ResourceList();
+    private static ResourceList resourcelist = new ResourceList();
+    private final ResourceList emptyResourceList = new ResourceList();
+    private final TestUtil testUtil = new TestUtil();
+    private final Command editCommand = new EditCommand();
 
     @BeforeAll
     public static void setup() throws SysLibException {
         testResourceList = TestUtil.fillTestList();
-
     }
 
     @Test
     public void testEditResourceNotFound() throws SysLibException {
-        String outputMessage = testUtil.getOutputMessage(editCommand, "/i 123 /t NEWTITLE", emptyResourceList);
+        String outputMessage = testUtil.getOutputMessage(editCommand, "/i 123 /t NEWTITLE",
+                emptyResourceList.getResourceList());
         String expectedMessage =  RESOURCE_NOT_FOUND;
         expectedMessage += LINESEPARATOR;
         assertEquals(expectedMessage, outputMessage);
@@ -43,13 +40,13 @@ public class EditCommandTest {
 
     @Test
     public void testNoArgumentGiven() throws SysLibException {
-        assertThrows(SysLibException.class, ()->editCommand.execute("/i 123", parser));
+        assertThrows(SysLibException.class, ()->editCommand.execute("/i 123", resourcelist));
 
     }
     @Test
     public void testNotBookBehavior() throws SysLibException {
-        parser.resourceList = testResourceList;
-        assertThrows(SysLibException.class, ()->editCommand.execute("/i 1 /g Horror", parser));
+        resourcelist = testResourceList;
+        assertThrows(SysLibException.class, ()->editCommand.execute("/i 1 /g Horror", resourcelist));
     }
     @Test
     public void testEditTitleBehavior() throws SysLibException {
@@ -67,8 +64,9 @@ public class EditCommandTest {
     }
 
     private void executeEditSuccessBehavior(String arguments) throws SysLibException {
-        String outputMessage = testUtil.getOutputMessage(editCommand, arguments, testResourceList);
-        String expectedMessage = EDIT_SUCCESS + formatLastLineDivider((testResourceList.get(1)).toString());
+        String outputMessage = testUtil.getOutputMessage(editCommand, arguments, testResourceList.getResourceList());
+        String expectedMessage = EDIT_SUCCESS + formatLastLineDivider((testResourceList.
+                getResourceList().get(1)).toString());
         expectedMessage += LINESEPARATOR;
         assertEquals(expectedMessage, outputMessage);
     }

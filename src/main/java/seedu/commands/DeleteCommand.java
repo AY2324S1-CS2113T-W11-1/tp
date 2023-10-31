@@ -2,8 +2,8 @@ package seedu.commands;
 
 import seedu.data.Book;
 import seedu.data.Resource;
+import seedu.data.ResourceList;
 import seedu.data.SysLibException;
-import seedu.parser.Parser;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,12 @@ public class DeleteCommand extends Command {
         required = new boolean[]{true};
     }
     @Override
-    public void execute(String statement, Parser parser) throws SysLibException {
+    public void execute(String statement, ResourceList resourceList) throws SysLibException {
         int id = parseInt(parseArgument(statement)[0]);
         assert id > 0;
         ArrayList<Resource> removals = new ArrayList<>();
         System.out.println("Looking for ID: " + id + "...");
-        for (Resource r: parser.resourceList){
+        for (Resource r: resourceList.getResourceList()){
             Book b = (Book) r;
             if (b.getId() == id){
                 System.out.println("This resource is removed: ");
@@ -31,7 +31,7 @@ public class DeleteCommand extends Command {
             System.out.println("No resources with id matching " + id + System.lineSeparator() +
                     "____________________________________________________________");
         } else {
-            parser.resourceList.removeAll(removals);
+            resourceList.getResourceList().removeAll(removals);
         }
     }
 
