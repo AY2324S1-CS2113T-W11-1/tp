@@ -9,15 +9,22 @@ import seedu.data.Book;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TestUtil {
-    public String getOutputMessage(Command c, String m, ArrayList<Resource> resourceList) throws SysLibException {
-        ResourceList resourcelist = new ResourceList(resourceList);
+
+    public String getOutputMessage(Command c, String m, ResourceList resourceList) throws SysLibException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
-        c.execute(m, resourcelist);
+        c.execute(m, resourceList);
         return outputStream.toString();
+    }
+
+    public static String getCurrentDate(){
+        LocalDateTime dateReceived = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        return dateReceived.format(formatter);
     }
 
     public static ResourceList fillTestList() {

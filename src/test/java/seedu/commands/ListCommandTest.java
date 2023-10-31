@@ -36,7 +36,7 @@ public class ListCommandTest {
 
     @Test
     public void testEmptyListMessage() throws SysLibException {
-        String outputMessage = testUtil.getOutputMessage(listCommand, "", emptyResourceList.getResourceList());
+        String outputMessage = testUtil.getOutputMessage(listCommand, "", emptyResourceList);
         String expectedMessage = GENERIC_MESSAGE;
         expectedMessage +=  ZERO_RESOURCES_MESSAGE + LINESEPARATOR;
         assertEquals(expectedMessage, outputMessage);
@@ -59,7 +59,7 @@ public class ListCommandTest {
     @Test
     public void testNoFilteredListDisplay() throws SysLibException {
         String outputMessage = testUtil.getOutputMessage(listCommand, "/g Thriller",
-                testResourceList.getResourceList());
+                testResourceList);
         String expectedMessage = FILTER_MESSAGE;
         expectedMessage += ZERO_RESOURCES_MESSAGE + LINESEPARATOR;
         assertEquals(expectedMessage, outputMessage);

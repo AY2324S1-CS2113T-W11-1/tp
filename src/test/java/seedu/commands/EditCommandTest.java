@@ -32,7 +32,7 @@ public class EditCommandTest {
     @Test
     public void testEditResourceNotFound() throws SysLibException {
         String outputMessage = testUtil.getOutputMessage(editCommand, "/i 123 /t NEWTITLE",
-                emptyResourceList.getResourceList());
+                emptyResourceList);
         String expectedMessage =  RESOURCE_NOT_FOUND;
         expectedMessage += LINESEPARATOR;
         assertEquals(expectedMessage, outputMessage);
@@ -64,7 +64,7 @@ public class EditCommandTest {
     }
 
     private void executeEditSuccessBehavior(String arguments) throws SysLibException {
-        String outputMessage = testUtil.getOutputMessage(editCommand, arguments, testResourceList.getResourceList());
+        String outputMessage = testUtil.getOutputMessage(editCommand, arguments, testResourceList);
         String expectedMessage = EDIT_SUCCESS + formatLastLineDivider((testResourceList.
                 getResourceList().get(1)).toString());
         expectedMessage += LINESEPARATOR;
