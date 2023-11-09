@@ -13,12 +13,12 @@ public class ParseResource {
         String pattern = "(?=.*/i ([a-zA-Z0-9]+))";
         Matcher matcher = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE).matcher(statement);
         boolean isMatching = matcher.find();
-
         if (!isMatching) {
             throw new SysLibException("Please enter a valid ISBN." + SEPARATOR_LINEDIVIDER);
         }
-
-        if (matcher.group(1).trim().length() != 13) {
+        String result = matcher.group(1).trim();
+        parseInt(result);
+        if (result.length() != 13) {
             throw new SysLibException("Please enter a valid ISBN with 13 characters." + SEPARATOR_LINEDIVIDER);
         }
     }
@@ -148,5 +148,15 @@ public class ParseResource {
         }
 
         return isMatching;
+    }
+    public static void parseInt(String value) {
+        try {
+            int tempNum = Integer.parseInt(value);
+            if (0 > tempNum) {
+                throw new IllegalArgumentException("The ISBN given is not a valid number!");
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException ("The ISBN given is not a number!");
+        }
     }
 }
